@@ -13,7 +13,14 @@ import re
 
 
 async def downloadfile(url, filename):
-    auth = aiohttp.BasicAuth("elio.maisonneuve@eisti.fr", "MDPRandolivetiles1")
+    try:
+        peps_username = os.environ["SATILE_PEPS_USERNAME"]
+        peps_password = os.environ["SATILE_PEPS_PASSWORD"]
+    except KeyError as e:
+        print("SATILE_PEPS_USERNAME or SATILE_PEPS_PASSWORD environment variables not present")
+        raise e
+
+    auth = aiohttp.BasicAuth(peps_username, peps_password)
 
     async with aiohttp.ClientSession(auth=auth) as session:
         async with session.get(url, timeout=None) as satimg_service_response:
