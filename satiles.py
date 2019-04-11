@@ -5,6 +5,7 @@ from zipfile import ZipFile
 from gdal2tiles import generate_tiles
 import asyncio
 import aiohttp
+import aiohttp_cors
 import asyncio
 import shutil
 import os
@@ -86,5 +87,18 @@ async def check_img_done(request):
 app = web.Application()
 app.add_routes([web.post('/', sat_img_downloader),
                 web.get('/check-img-status', check_img_done)])
+
+# Configure default CORS settings.
+cors = aiohttp_cors.setup(app, defaults={
+    "*": aiohttp_cors.ResourceOptions(
+            expose_headers="*",
+            allow_headers="*",
+        )
+})
+
+# Configure CORS on all routes.
+for route in app.router.routes():
+    cors.add(route)
+
 setup(app)
 web.run_app(app)
