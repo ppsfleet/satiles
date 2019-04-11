@@ -5,13 +5,16 @@
 dnf install gdal-devel
 ```
 
-
 ## make virtualenv
 ```Bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+
+# Configure
+Export `SATILE_PEPS_USERNAME` and `SATILE_PEPS_PASSWORD` environment variables with your peps credentials
+
 
 # Start project
 ```Bash
