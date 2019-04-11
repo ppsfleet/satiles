@@ -35,7 +35,6 @@ async def extract_img(filename):
     with ZipFile(filename + ".zip", 'r') as zfile:
         for member in zfile.infolist():
             if re.match(r'(.*)(TCI)(.)(?!(20m|30m))(.*)', member.filename):
-                filepath = os.path.join(filename, os.path.basename(member.filename))
                 member.filename = os.path.basename(member.filename)
                 zfile.extract(member)
                 yield member.filename
@@ -68,6 +67,7 @@ async def process_url(url, filename):
         shutil.move(sat_img, os.path.join(filename, sat_img))
         sat_tiles_dir = sat_img.split(".")[0]
         shutil.move(sat_tiles_dir, os.path.join(filename, sat_tiles_dir))
+    os.remove(filename + ".zip")
 
 
 async def sat_img_downloader(request):
