@@ -6,7 +6,6 @@ from gdal2tiles import generate_tiles
 import asyncio
 import aiohttp
 import aiohttp_cors
-import asyncio
 import shutil
 import os
 import re
